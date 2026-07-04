@@ -3,6 +3,10 @@
 
 reference this [gist](https://gist.github.com/barrycumbie/36fff4083f20439615e1ed7811f81a3c)
 
+## sprint 99 / future dev ideas
+
+- check out this [milestone](https://github.com/barrycumbie/charlie-brain-bucket/milestone/1) for future dev ideas 
+
 ## project dir/ structure 
 
 ```bash
