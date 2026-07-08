@@ -1,8 +1,14 @@
 (() => {
   const STORAGE_KEY = 'contentRecords';
-  const contentRoot = document.getElementById('content-list');
 
-  if (!contentRoot) {
+  if (!window.brainBucketAuth || !window.brainBucketAuth.requireAuth()) {
+    return;
+  }
+
+  const contentRoot = document.getElementById('content-list');
+  const cardTemplate = document.getElementById('content-card-template');
+
+  if (!contentRoot || !(cardTemplate instanceof HTMLTemplateElement)) {
     return;
   }
 
@@ -18,15 +24,6 @@
     } catch (error) {
       return [];
     }
-  }
-
-  function escapeHtml(value) {
-    return String(value)
-      .replaceAll('&', '&amp;')
-      .replaceAll('<', '&lt;')
-      .replaceAll('>', '&gt;')
-      .replaceAll('"', '&quot;')
-      .replaceAll("'", '&#39;');
   }
 
   function formatDate(isoDate) {
@@ -57,50 +54,66 @@
     `;
   }
 
+  function buildLinksMarkup(links, linksRoot) {
+    linksRoot.innerHTML = '';
+
+    (links || []).forEach((link) => {
+      const url = String(link.url || '#');
+      const label = String(link.description || link.url || 'Open link');
+
+      if (!link.url) {
+        const span = document.createElement('span');
+        span.className = 'badge text-bg-light border';
+        span.textContent = label;
+        linksRoot.appendChild(span);
+        return;
+      }
+
+      const anchor = document.createElement('a');
+      anchor.className = 'badge text-bg-light border text-decoration-none';
+      anchor.href = url;
+      anchor.target = '_blank';
+      anchor.rel = 'noopener noreferrer';
+      anchor.textContent = label;
+      linksRoot.appendChild(anchor);
+    });
+  }
+
   function renderCards(records) {
     if (!records.length) {
       renderEmptyState();
       return;
     }
 
-    contentRoot.innerHTML = records
-      .map((record) => {
-        const safeTitle = escapeHtml(record.title || 'Untitled');
-        const safeAuthor = escapeHtml(record.author || 'Unknown author');
-        const safeDate = escapeHtml(formatDate(record.date));
-        const safeDescription = escapeHtml(record.description || '');
-        const safeImage = escapeHtml(record.image || 'https://picsum.photos/800/420?grayscale');
+    contentRoot.innerHTML = '';
 
-        const linksMarkup = (record.links || [])
-          .map((link) => {
-            const safeUrl = escapeHtml(link.url || '#');
-            const safeLabel = escapeHtml(link.description || link.url || 'Open link');
-            if (!link.url) {
-              return `<span class="badge text-bg-light border">${safeLabel}</span>`;
-            }
+    records.forEach((record) => {
+      const fragment = cardTemplate.content.cloneNode(true);
+      const titleEl = fragment.querySelector('[data-field="title"]');
+      const metaEl = fragment.querySelector('[data-field="meta"]');
+      const imageEl = fragment.querySelector('[data-field="image"]');
+      const descriptionEl = fragment.querySelector('[data-field="description"]');
+      const linksRoot = fragment.querySelector('[data-field="links"]');
 
-            return `<a class="badge text-bg-light border text-decoration-none" href="${safeUrl}" target="_blank" rel="noopener noreferrer">${safeLabel}</a>`;
-          })
-          .join(' ');
+      if (!titleEl || !metaEl || !imageEl || !descriptionEl || !linksRoot) {
+        return;
+      }
 
-        return `
-          <div class="col-12">
-            <article class="card shadow-sm">
-              <div class="card-header">
-                <h5 class="card-title mb-1">${safeTitle}</h5>
-                <p class="card-text text-secondary fw-semibold opacity-75 mb-0">by ${safeAuthor} | ${safeDate}</p>
-              </div>
+      const safeTitle = String(record.title || 'Untitled');
+      const safeAuthor = String(record.author || 'Unknown author');
+      const safeDate = String(formatDate(record.date));
+      const safeDescription = String(record.description || '');
+      const safeImage = String(record.image || 'https://picsum.photos/800/420?grayscale');
 
-              <div class="card-body">
-                <img class="img-fluid rounded" src="${safeImage}" alt="${safeTitle}">
-                <p class="card-text pt-3 mb-2">${safeDescription}</p>
-                ${linksMarkup ? `<div class="d-flex flex-wrap gap-2">${linksMarkup}</div>` : ''}
-              </div>
-            </article>
-          </div>
-        `;
-      })
-      .join('');
+      titleEl.textContent = safeTitle;
+      metaEl.textContent = `by ${safeAuthor} | ${safeDate}`;
+      imageEl.setAttribute('src', safeImage);
+      imageEl.setAttribute('alt', safeTitle);
+      descriptionEl.textContent = safeDescription;
+      buildLinksMarkup(record.links || [], linksRoot);
+
+      contentRoot.appendChild(fragment);
+    });
   }
 
   renderCards(readStoredRecords());
