@@ -1,5 +1,9 @@
 # my generic web app framework 
-> [dev project] charlie 
+> [dev project] charlie
+
+# deployments
+
+- dev server: https://barrycumbie.github.io/charlie-brain-bucket/
 
 reference this [gist](https://gist.github.com/barrycumbie/36fff4083f20439615e1ed7811f81a3c)
 
