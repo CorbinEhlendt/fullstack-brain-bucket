@@ -3,7 +3,7 @@
 
 # deployments
 
-- dev server: https://barrycumbie.github.io/charlie-brain-bucket/
+- dev server: https://corbin-fullstack-brain-bucket.onrender.com
 - video production server: http://34.174.66.159
 
 reference this [gist](https://gist.github.com/barrycumbie/36fff4083f20439615e1ed7811f81a3c)
