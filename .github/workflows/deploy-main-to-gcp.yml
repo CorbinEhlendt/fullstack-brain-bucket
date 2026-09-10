@@ -51,10 +51,10 @@ jobs:
           # later:
           # ssh-keyscan -H "${{ vars.SSH_HOST }}" >> ~/.ssh/known_hosts
 
-          ssh-keyscan -H 34.106.229.37 >> ~/.ssh/known_hosts
+          # ssh-keyscan -H 34.106.229.37 >> ~/.ssh/known_hosts
 
           # known_hosts is not secret; it only needs to be readable
-          chmod 644 ~/.ssh/known_hosts
+          # chmod 644 ~/.ssh/known_hosts
 
 
       # ======================================================
