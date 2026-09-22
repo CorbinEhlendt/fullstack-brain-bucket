@@ -1,8 +1,9 @@
-
+import express from 'express';
 import 'dotenv/config';
 import { MongoClient, ServerApiVersion } from 'mongodb';
 
 const uri = process.env.MONGO_URI;
+const app = express();
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -25,4 +26,30 @@ async function run() {
     await client.close();
   }
 }
-run().catch(console.dir);
+run().catch(console.dir)
+
+app.get(
+  '/api/hello', function(req, res) {
+
+    // const message = "hello from the server as a variable"
+
+    const message = {
+
+      message : 'Hello from hardcode json',
+      success : 'true'
+
+    }
+
+    res.json(message);
+
+    // res.send(
+    //   message
+    // );
+
+  }
+);
+
+app.listen(5500, () => {
+  console.log('Server is running on http://localhost:5500')
+})
+
