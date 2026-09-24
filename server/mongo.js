@@ -1,9 +1,16 @@
 import express from 'express';
 import 'dotenv/config';
 import { MongoClient, ServerApiVersion } from 'mongodb';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 const uri = process.env.MONGO_URI;
 const app = express();
+
+app.use(express.static(join(__dirname, '../public')));
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -28,22 +35,22 @@ async function run() {
 }
 run().catch(console.dir)
 
+app.get('/', (req, res) => {
+  res.sendFile(join(__dirname, '../public', 'hotel.html'));
+})
+
 app.get(
   '/api/hello', function(req, res) {
 
     // const message = "hello from the server as a variable"
 
     const message = {
-
       message : 'Hello from hardcode json',
       success : 'true'
-
     }
-
     res.json(message);
 
-    // res.send(
-    //   message
+    // res.send(message
     // );
 
   }
