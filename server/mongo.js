@@ -11,6 +11,17 @@ const uri = process.env.MONGO_URI;
 const app = express();
 
 app.use(express.static(join(__dirname, '../public')));
+app.use( express.json());
+
+app.post(
+  '/api/students', function(req, res) {
+      console.log(req.body);
+    res.json({
+      received:
+        req.body
+    });
+  }
+);
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
