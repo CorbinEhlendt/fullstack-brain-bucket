@@ -5,6 +5,7 @@ import { MongoClient, ServerApiVersion } from 'mongodb';
 import express from 'express'
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { ObjectId } from 'mongodb';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -28,7 +29,7 @@ const collection = db.collection('items');
 const seedData = [
   { name: 'alpha', category: 'one' },
   { name: 'bravo', category: 'two' },
-  { name: 'charlie', category: 'one'}
+  { name: 'charlie', category: 'one' }
 ];
 
 
@@ -67,7 +68,61 @@ app.get('/api/hello', function (req, res) {
 }
 );
 
-//start POST endpoints
+//iss08, get all items. 
+//iss10 in here also, refactored this endpoint for all or filtered itemss
+app.get('/api/items', async function (req, res) {
+
+  //iss10 stuff
+  
+  const category = req.query.category;
+
+  // console.log('iss10 category.', category);
+
+  const filter =
+    category
+      ? {
+        category: category
+      }
+      : {};
+  //end iss10 new stuff
+
+  const records =
+    await collection
+      // .find({}) remove for iss10
+      .find(filter) //add for iss10
+      .toArray();
+
+  res.json(records);
+
+}
+);
+
+//iss09. get one
+app.get('/api/items/:id', async function (req, res) {
+
+  const id =
+    new ObjectId(
+      req.params.id
+    );
+
+  const record =
+    await collection
+      .findOne({
+        _id: id
+      });
+
+  res.json(record);
+
+}
+);
+
+//iss 11, notice post to slash api/items != get to slash of same name
+app.post('/api/items', async function(req, res) {
+    const newItem = req.body;
+    const result = await collection.insertOne(newItem);
+    res.status(201).json(result);
+});
+
 app.post('/api/students', function (req, res) {
   console.log(req.body);
 
@@ -78,25 +133,26 @@ app.post('/api/students', function (req, res) {
 }
 );
 
-app.post('/api/dev/seed', async function(req, res) {
-    const result =
-      await collection
-        .insertMany(
-          seedData
-        );
-    res.json(result);
-  }
+//iss07 seed & clear 
+app.post('/api/dev/seed', async function (req, res) {
+  const result =
+    await collection
+      .insertMany(
+        seedData
+      );
+  res.json(result);
+}
 );
 
-app.delete( '/api/dev/clear', async function(req, res) {
+app.delete('/api/dev/clear', async function (req, res) {
 
-    const result =
-      await collection
-        .deleteMany({});
+  const result =
+    await collection
+      .deleteMany({});
 
-    res.json(result);
+  res.json(result);
 
-  }
+}
 );
 //start up server
 
