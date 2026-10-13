@@ -21,8 +21,8 @@
   | HOTEL milestone | [milestone](https://github.com/CorbinEhlendt/fullstack-brain-bucket/milestone/1) |
   | example issue | [issue #](https://github.com/CorbinEhlendt/fullstack-brain-bucket/issues/2) |
   | development branch | [branch](https://github.com/CorbinEhlendt/fullstack-brain-bucket/tree/dev) |
-  | feature → dev | [PR #](https://github.com/CorbinEhlendt/fullstack-brain-bucket/pull/4) |
-  | dev → main | [PR #](https://github.com/CorbinEhlendt/fullstack-brain-bucket/pull/6) |
+  | feature → dev | [PR #4](https://github.com/CorbinEhlendt/fullstack-brain-bucket/pull/4) |
+  | dev → main | [PR #6](https://github.com/CorbinEhlendt/fullstack-brain-bucket/pull/6) |
   | PROD deployment | [GitHub Action](https://github.com/CorbinEhlendt/fullstack-brain-bucket/actions/runs/37508769922) |
 
 ### user story
@@ -41,10 +41,12 @@ is also a Dev branch that allows me to work on the app and view any changes with
 
 ``` text
 LOCAL
-  │
+  ├── client ──► fetch() ──► Express REST API ──► MongoDB Atlas
   ▼
 GitHub
   │
+  ├── feature ──► PR ──► dev ──► PR ──► main ──► GitHub Actions ──► GCP
+  |
   ├── dev  ──► Render ─────────► DEV
   │
   └── main ──► GitHub Actions ─► GCP ──► PROD
