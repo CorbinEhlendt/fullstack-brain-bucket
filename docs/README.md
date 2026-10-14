@@ -3,21 +3,27 @@
 
 ### authorship + version
 
-`@corbinehlendt` \| `2026-09-15` \| `GOLF`
+`@corbinehlendt` \| `2026-10-08` \| `Hotel`
 
 ### deployments, codebase, & repo features 
 
   |resource                     |link|
   |---------------------------|----------------------|
-  |PROD codebase                |[`main`](https://github.com/CorbinEhlendt/fullstack-brain-bucket)|
-  |PROD server                  |[GCP](https://corbin.barrycumbie.com/)|
-  |DEV codebase                 |[`dev`](https://github.com/CorbinEhlendt/fullstack-brain-bucket/tree/dev)|
-  |DEV server                   |[Render](https://corbin-fullstack-brain-bucket.onrender.com)|
-  |docs                         |[`docs/`](https://github.com/CorbinEhlendt/fullstack-brain-bucket/tree/main/docs)|
-  |published docs               |[GitHub Pages](URL)|
-  |CI/CD workflow               |[`deploy.yml`](https://github.com/CorbinEhlendt/fullstack-brain-bucket/blob/main/.github/workflows/re-deploy-main-to-gcp.yml)|
-  |successful PROD deployment   |[GitHub Action](https://github.com/CorbinEhlendt/fullstack-brain-bucket/actions/runs/35002704274)|
-  |resolved GOLF issue          |[issue \#](https://github.com/CorbinEhlendt/fullstack-brain-bucket/issues/1)|
+  | MongoDB connection | [server code](https://github.com/CorbinEhlendt/fullstack-brain-bucket/blob/3f3eebacd730c32fd4fcfb080a46920a71a21a60/server/mongo.js#L19) |
+  | GET all | [endpoint code](https://github.com/CorbinEhlendt/fullstack-brain-bucket/blob/3f3eebacd730c32fd4fcfb080a46920a71a21a60/server/mongo.js#L73) |
+  | GET one | [endpoint code](https://github.com/CorbinEhlendt/fullstack-brain-bucket/blob/3f3eebacd730c32fd4fcfb080a46920a71a21a60/server/mongo.js#L100) |
+  | filtered GET | [endpoint code](https://github.com/CorbinEhlendt/fullstack-brain-bucket/blob/3f3eebacd730c32fd4fcfb080a46920a71a21a60/server/mongo.js#L81) |
+  | POST / create | [endpoint code](https://github.com/CorbinEhlendt/fullstack-brain-bucket/blob/3f3eebacd730c32fd4fcfb080a46920a71a21a60/server/mongo.js#L120) |
+  | PATCH / update | [endpoint code](https://github.com/CorbinEhlendt/fullstack-brain-bucket/blob/3f3eebacd730c32fd4fcfb080a46920a71a21a60/server/mongo.js#L157) |
+  | DELETE | [endpoint code](https://github.com/CorbinEhlendt/fullstack-brain-bucket/blob/3f3eebacd730c32fd4fcfb080a46920a71a21a60/server/mongo.js#L167) |
+  | frontend `fetch()` | [client code](https://github.com/CorbinEhlendt/fullstack-brain-bucket/blob/3f3eebacd730c32fd4fcfb080a46920a71a21a60/public/hotel.html#L168) |
+  | persistent CRUD | [PROD app](https://corbin.barrycumbie.com/) |
+  | HOTEL milestone | [milestone](https://github.com/CorbinEhlendt/fullstack-brain-bucket/milestone/1) |
+  | example issue | [issue #](https://github.com/CorbinEhlendt/fullstack-brain-bucket/issues/2) |
+  | development branch | [branch](https://github.com/CorbinEhlendt/fullstack-brain-bucket/tree/dev) |
+  | feature → dev | [PR #4](https://github.com/CorbinEhlendt/fullstack-brain-bucket/pull/4) |
+  | dev → main | [PR #6](https://github.com/CorbinEhlendt/fullstack-brain-bucket/pull/6) |
+  | PROD deployment | [GitHub Action](https://github.com/CorbinEhlendt/fullstack-brain-bucket/actions/runs/37508769922) |
 
 ### user story
 
@@ -35,10 +41,12 @@ is also a Dev branch that allows me to work on the app and view any changes with
 
 ``` text
 LOCAL
-  │
+  ├── client ──► fetch() ──► Express REST API ──► MongoDB Atlas
   ▼
 GitHub
   │
+  ├── feature ──► PR ──► dev ──► PR ──► main ──► GitHub Actions ──► GCP
+  |
   ├── dev  ──► Render ─────────► DEV
   │
   └── main ──► GitHub Actions ─► GCP ──► PROD
@@ -46,8 +54,8 @@ GitHub
 
 ### stack
 
-`HTML/CSS/JS` \| `Node.js` \| `Express` \| `Git/GitHub` \| `Render` \|
-`GCP` \| `Linux` \| `Nginx` \| `PM2` \| `Certbot` \| `GitHub Actions`
+`HTML/CSS/JS` | `Bootstrap 5` | `Node.js` | `Express` | `REST` |
+`MongoDB` | `Atlas` | `Git/GitHub` | `GCP` | `Nginx` | `PM2` | `GitHub Actions`
 
 ### project structure
 
@@ -60,9 +68,14 @@ repo/
 ├── docs/
 │   └── README.md
 ├── public/
+│   ├── hotel.html
+|   ├── not-index.html
 ├── server/
-├── .gitignore
-└── ...
+│   ├── app.js
+│   ├── mongo.js
+│   ├── package.json
+│   └── package-lock.json
+└── .gitignore
 ```
 
 ### GCP
