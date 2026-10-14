@@ -16,14 +16,15 @@
   | POST / create | [endpoint code](https://github.com/CorbinEhlendt/fullstack-brain-bucket/blob/3f3eebacd730c32fd4fcfb080a46920a71a21a60/server/mongo.js#L120) |
   | PATCH / update | [endpoint code](https://github.com/CorbinEhlendt/fullstack-brain-bucket/blob/3f3eebacd730c32fd4fcfb080a46920a71a21a60/server/mongo.js#L157) |
   | DELETE | [endpoint code](https://github.com/CorbinEhlendt/fullstack-brain-bucket/blob/3f3eebacd730c32fd4fcfb080a46920a71a21a60/server/mongo.js#L167) |
-  | frontend `fetch()` | [client code](https://github.com/CorbinEhlendt/fullstack-brain-bucket/blob/3f3eebacd730c32fd4fcfb080a46920a71a21a60/public/hotel.html#L168) |
+  | frontend `fetch()` | [client code](https://github.com/CorbinEhlendt/fullstack-brain-bucket/blob/af0fe2a7e65f4707f819e6dada6189ec81498c9f/public/app.js#L11) |
   | persistent CRUD | [PROD app](https://corbin.barrycumbie.com/) |
   | HOTEL milestone | [milestone](https://github.com/CorbinEhlendt/fullstack-brain-bucket/milestone/1) |
-  | example issue | [issue #](https://github.com/CorbinEhlendt/fullstack-brain-bucket/issues/2) |
+  | example issue | [issue #7](https://github.com/CorbinEhlendt/fullstack-brain-bucket/issues/2) |
   | development branch | [branch](https://github.com/CorbinEhlendt/fullstack-brain-bucket/tree/dev) |
-  | feature → dev | [PR #4](https://github.com/CorbinEhlendt/fullstack-brain-bucket/pull/4) |
-  | dev → main | [PR #6](https://github.com/CorbinEhlendt/fullstack-brain-bucket/pull/6) |
+  | feature → dev | [PR #8](https://github.com/CorbinEhlendt/fullstack-brain-bucket/pull/8) |
+  | dev → main | [PR #9](https://github.com/CorbinEhlendt/fullstack-brain-bucket/pull/9) |
   | PROD deployment | [GitHub Action](https://github.com/CorbinEhlendt/fullstack-brain-bucket/actions/runs/37508769922) |
+  | DEV Server | [server](https://corbin-fullstack-brain-bucket.onrender.com) |
 
 ### user story
 
@@ -69,9 +70,10 @@ repo/
 │   └── README.md
 ├── public/
 │   ├── hotel.html
+│   ├── index.html
 |   ├── not-index.html
+│   ├── style.css
 ├── server/
-│   ├── app.js
 │   ├── mongo.js
 │   ├── package.json
 │   └── package-lock.json
